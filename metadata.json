@@ -1,0 +1,6 @@
+{
+  "name": "Kikuyu Water - Community Water Management System",
+  "description": "Digital operations platform for the Kikuyu community water supply scheme, managing customer connections, meter readings, billing, payments, faults, and infrastructure.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

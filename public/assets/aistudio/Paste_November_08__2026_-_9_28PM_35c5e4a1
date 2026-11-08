@@ -1,0 +1,1657 @@
+KIKUYU WATER
+Complete application design and functionality specification
+KIKUYU WATER
+Community Water Management System
+Every drop matters. Every community counts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The product vision
+Kikuyu Water is a digital platform for operating a community water supply scheme. It brings the people, financial records, water connections, consumption records and maintenance operations of the scheme into one organised system.
+
+It must feel like a modern, polished SaaS application, but with a distinctive community-water identity.
+
+The experience should be:
+- Friendly: Pip, the little water-drop mascot, makes the system approachable.
+- Professional: Financial and customer records are presented clearly.
+- Practical: Staff can complete daily work with as few unnecessary clicks as possible.
+- Consistent: Every module follows the same visual and interaction rules.
+- Reliable: The figures, records and statuses are backed by actual database data.
+The system is not a public marketing website. It is an operational application with a login, staff workspace and customer portal.
+
+One technology detail to make precise: the animation library is now called Motion for React. Its current package is motion, imported from motion/react; it supports entrance/exit animations, hover interactions, layout transitions and SVG animation. 
+Motion for React+1
+ React itself will handle the component structure, data display and interactive state. 
+React+1
+
+Part I — Exact screen-by-screen design
+1. Global design measurements
+These are the design rules to use across the application.
+Property	Specification
+Main desktop design	1440 × 900 reference
+Minimum supported desktop	1024px wide
+Tablet layout	768–1023px
+Mobile layout	360–767px
+Sidebar expanded	250px
+Sidebar collapsed	76px
+Header	72px
+Main content padding	32px desktop, 20px tablet, 16px mobile
+Card radius	16px
+Input radius	10px
+Button height	42–46px
+Standard input height	44–48px
+Table row height	56–64px
+Modal radius	18px
+Standard content width	Flexible, maximum 1440px
+
+The main application background is Pearl (#FAF8F1). Content cards are white. The sidebar is a very pale seafoam. The main button colour is Turquoise (#399D9D).
+
+The interface must not have a giant decorative water illustration behind every page. Save those illustrations for the login page, empty states, welcome sections and occasional onboarding screens.
+2. The application shell
+The shell is the permanent frame around all staff pages.
+
+
+
+
+
+
+
+
+wrapmarket.com
+
+
+A. Sidebar
+At the top of the sidebar:
+- A 40px rounded-square logo containing a droplet.
+- Text logo Kikuyu Water.
+- Smaller subtitle Community Management.
+- A collapse/expand control.
+Below it, divide navigation into three groups.
+
+Overview
+
+- Overview.
+
+Water Operations
+- Customers.
+- Connections & Meters.
+- Meter Readings.
+- Billing & Invoices.
+- Payments.
+- Fault Reports.
+- Infrastructure.
+Management
+- Reports & Analytics.
+- Announcements.
+- User Management.
+- Audit Logs.
+- Settings.
+The sidebar should show only items the signed-in user is permitted to access.
+
+Each navigation item:
+- Has a 20px outline icon.
+- Has a text label.
+- Has a hover background.
+- Has a selected background.
+- Can show a small notification count where relevant.
+The selected item has a pale turquoise background, a turquoise icon and a small 3px accent on the left edge.
+
+On hover, the icon and label change colour. Do not make the entire sidebar bounce.
+B. Top header
+The header should remain visible as the user scrolls.
+
+Left:
+- Breadcrumb, e.g. Water Operations / Customers.
+- Optional page context.
+Right:
+- Search icon or search input.
+- Notification bell.
+- Help icon.
+- Profile avatar.
+- User name.
+- Role label.
+Clicking the notification bell opens a small notification panel. It shows the most recent notifications, unread indicators, timestamps and a View all link.
+
+Clicking the profile opens:
+- My profile.
+- Change password.
+- Preferences.
+- Sign out.
+C. Main content
+Every page should use the same page-heading structure:
+- Small breadcrumb.
+- Large title.
+- One-sentence description.
+- Primary action button, where applicable.
+- Secondary actions.
+- Page content.
+For example:
+
+Customers
+
+Manage customer accounts, household information and water connections.
+
+Right side: Export and + Add Customer.
+
+The page title must not be buried inside a card. It belongs at the top of the content area.
+
+3. Login page — exact design
+
+
+
+
+
+
+
+
+blink.new
+
+
+Layout
+Use a full-height screen with two columns.
+
+Left column: approximately 55%
+
+Background: Deep Ocean (#164E63).
+
+Contents:
+- White logo.
+- Large heading: Water connects us. Let's manage it better.
+- Supporting text: A smarter way to manage community water services.
+- Pip illustration.
+- Decorative flowing-water shapes.
+- Bottom text: Every drop matters. Every community counts.
+The decorative background can contain translucent wave shapes. They should move very slowly, almost imperceptibly.
+
+Right column: approximately 45%
+
+Background: Pearl.
+
+Login card:
+- Width around 400px.
+- Centred vertically.
+- No heavy shadow.
+- Heading Welcome back!.
+- Supporting line Sign in to your Kikuyu Water account.
+Fields:
+Field	Type	Behaviour
+Email or username	Text	Required
+Password	Password	Required, show/hide
+Remember me	Checkbox	Optional
+Forgot password	Link	Starts reset flow
+
+Primary button: Sign In.
+
+Button states:
+- Normal: turquoise.
+- Hover: slightly darker.
+- Loading: small spinner and Signing in....
+- Disabled: muted colour.
+- Success: proceed to the appropriate dashboard.
+Below the button, include a small privacy/security note.
+Login errors
+If the credentials are incorrect:
+- Keep the user on the login screen.
+- Display an inline error above the button.
+- Use a small alert icon.
+- Do not clear the email.
+- Do not reveal whether the email exists.
+If the server cannot be reached, show a different message: We couldn't connect. Please try again.
+Forgot password screen
+A separate simple page:
+- Back to sign in.
+- Reset your password.
+- Email field.
+- Send reset instructions button.
+- Confirmation message.
+For a project demonstration, the reset workflow can use a controlled demonstration email flow if actual email delivery is not implemented. Label it accurately.
+
+4. Dashboard — exact layout and behaviour
+
+
+
+
+
+
+
+
+bynry.com
+
+
+The dashboard should not be one enormous wall of cards. It should have a deliberate visual hierarchy.
+Top section
+At the top of the content:
+
+Good morning, Ivy!
+
+Supporting line:
+
+Here's what's happening across your community water scheme.
+
+At the right:
+- Current date.
+- Period selector.
+- Refresh icon.
+The greeting should use the first name from the logged-in user's profile, not a hardcoded name.
+KPI row
+Four equal cards:
+
+Total Customers
+- Large count.
+- Small users icon.
+- Number of active customers.
+- Click opens customer directory.
+Revenue Collected
+- KSh total.
+- Wallet icon.
+- Selected date range.
+- Click opens financial reports.
+Outstanding Balances
+- KSh amount.
+- Receipt icon.
+- Outstanding invoice count.
+- Click opens unpaid invoices.
+Open Faults
+- Count.
+- Wrench icon.
+- Number of critical faults.
+- Click opens fault reports filtered to unresolved.
+The values must be fetched from the API. The dashboard must not contain permanently hardcoded sample numbers.
+Second row: analytics
+Split into two columns.
+
+Water Consumption card — approximately 60% width
+
+Contains:
+- Heading Water Consumption.
+- Subtitle Total water used across the scheme.
+- Time selector.
+- Line chart.
+- X-axis dates.
+- Y-axis consumption in m³.
+- Hover tooltip.
+- Legend if multiple series are shown.
+A line chart is useful for monthly trends. A bar chart is better for comparing community zones.
+
+Collection Overview card — approximately 40% width
+
+Contains:
+- Total amount collected.
+- Payment method breakdown.
+- Doughnut chart or horizontal bars.
+- M-Pesa, cash and bank categories.
+- Percentages and KSh values.
+Never use an unexplained pie chart without labels.
+Third row
+Recent activity — left
+
+Each activity entry has:
+- Small icon inside a circular background.
+- Activity description.
+- User who performed the action.
+- Timestamp.
+- Clickable reference.
+Examples:
+- Mary Wanjiku was registered as a new customer.
+- A meter reading was submitted for KIK-000124.
+- Payment of KSh 1,000 was recorded.
+- A leakage report was submitted in Zone 2.
+Fault overview — right
+
+Show four horizontal status bars:
+- Open.
+- Assigned.
+- In Progress.
+- Resolved.
+Clicking one filters the fault list.
+Fourth row: quick actions
+A compact set of buttons:
+- Register customer.
+- Record reading.
+- Generate invoices.
+- Record payment.
+- Report fault.
+Do not show actions a user cannot perform.
+Dashboard loading
+When data is loading:
+- Display skeleton cards.
+- Display skeleton chart areas.
+- Keep the overall layout stable.
+- Do not make the entire page disappear.
+If the dashboard API fails, show a small retry panel and keep unrelated parts of the page available.
+
+5. Customer directory — exact specification
+
+
+Page header
+Title: Customers
+
+Description: View and manage registered customers and their water accounts.
+
+Buttons:
+- Export
+- + Add Customer
+Summary row
+Four small cards:
+- All Customers.
+- Active Customers.
+- Pending Connections.
+- Inactive Accounts.
+Search and filters
+A horizontal toolbar:
+- Search customers.
+- Zone dropdown.
+- Customer type dropdown.
+- Account status dropdown.
+- Clear filters button.
+Search should work for:
+- Customer name.
+- Account number.
+- Phone number.
+- Meter number, if the user has permission.
+Table specification
+Column	Width guidance	Display
+Account	130px	KIK-000124
+Customer	220px	Name and optional avatar/initials
+Phone	140px	Contact number
+Zone	120px	Zone name
+Connection	130px	Status badge
+Balance	140px	KSh amount
+Registered	120px	Date
+Actions	70px	More menu
+
+The actions menu contains:
+- View profile.
+- Edit customer.
+- View invoices.
+- View payments.
+- Deactivate account, if authorised.
+Table behaviour
+- Header remains visible during table scrolling.
+- Rows highlight subtly on hover.
+- Clicking a row opens the customer profile.
+- Actions menu does not trigger row navigation.
+- Pagination appears at the bottom.
+- Show total result count.
+- Remember filters when returning from a profile, where practical.
+Empty search results:
+
+Pip with a magnifying glass.
+
+Text: No customers found.
+
+Supporting line: Try another search or adjust your filters.
+
+Button: Clear filters.
+
+6. Add Customer — exact form specification
+This is a particularly important screen, so I want it to be designed carefully.
+
+
+
+
+
+
+
+
+dribbble.com
+
+
+Use a full-page form, not a tiny popup.
+Form header
+Register a new customer
+
+Supporting text:
+
+Create a customer profile and register their water service details.
+
+A progress indicator with three stages:
+1. Personal Details.
+2. Address & Location.
+3. Water Connection.
+Step 1: Personal details
+Field	Type	Required
+Full name	Text	Yes
+Phone number	Telephone	Yes
+Alternative phone	Telephone	No
+Email	Email	No
+Customer type	Select	Yes
+Identification type	Select	Conditional
+Identification number	Text	Conditional
+
+Customer types:
+- Household.
+- Business.
+- Institution.
+Do not make a national ID number mandatory without a genuine scheme requirement. Collect only the personal information the project actually needs.
+Step 2: Address and location
+Field	Type	Required
+Community zone	Dropdown	Yes
+Village/neighbourhood	Text or dropdown	Yes
+Plot number	Text	No
+Street/physical address	Text	Yes
+Nearby landmark	Text	No
+Location notes	Textarea	No
+
+The zone dropdown should be populated from the database, not a hardcoded array of imaginary zones.
+Step 3: Water connection
+Field	Type	Required
+Connection type	Select	Yes
+Connection status	Select	Yes
+Tariff category	Select	Yes
+Meter installed?	Yes/No	Yes
+Meter serial number	Text	Conditional
+Installation date	Date	Conditional
+Initial reading	Number	Conditional
+Connection notes	Textarea	No
+
+The user can register a customer whose connection is pending. The system must not assume that every registered customer already has an active meter.
+Form footer
+Left:
+
+- Cancel.
+
+Right:
+- Back.
+- Continue or Review details.
+- Final button Create Customer.
+Review screen
+Display all entered information in a neat summary.
+
+Allow the user to click Edit next to each section.
+
+When the user confirms:
+1. Validate the data.
+2. Submit it to the API.
+3. Generate a unique customer account number.
+4. Save the customer.
+5. Save any initial connection and meter records.
+6. Create an audit entry.
+7. Display a success state.
+Success message:
+
+Customer registered successfully!
+
+Pip jumps once.
+
+Display:
+- Account number.
+- Customer name.
+- View profile button.
+- Register another customer button.
+
+7. Customer profile — exact specification
+When the user clicks a customer, the application opens a full profile.
+
+Top section:
+- Customer name.
+- Account number.
+- Customer status badge.
+- Phone number.
+- Zone.
+- Edit button.
+- More actions.
+Under the heading, use tabs.
+
+Overview
+- Personal information.
+- Current balance.
+- Connection status.
+- Meter information.
+- Latest invoice.
+- Last payment.
+- Recent activity.
+Connections
+- Connection number.
+- Connection type.
+- Status.
+- Meter information.
+- Installation date.
+- Connection history.
+Readings
+- Date.
+- Previous reading.
+- Current reading.
+- Consumption.
+- Reader.
+- Approval status.
+Invoices
+- Invoice number.
+- Billing period.
+- Amount.
+- Paid amount.
+- Balance.
+- Status.
+- View/download.
+Payments
+- Receipt number.
+- Date.
+- Amount.
+- Method.
+- Transaction reference.
+Fault reports
+- Fault reference.
+- Type.
+- Date.
+- Status.
+- Assigned technician.
+Activity
+- Record created.
+- Details edited.
+- Connection changed.
+- Payment received.
+- Invoice issued.
+The profile should use the same tab design as the rest of the application. Active tabs get a small turquoise underline.
+
+8. Connections and meters — exact specification
+This page should be organised into two tabs:
+- Connections.
+- Meters.
+Connections table
+Columns:
+- Connection number.
+- Customer account.
+- Customer name.
+- Zone.
+- Connection type.
+- Status.
+- Installation date.
+- Actions.
+Connection statuses:
+- Pending approval.
+- Active.
+- Suspended.
+- Disconnected.
+- Closed.
+Create connection
+Fields:
+- Customer.
+- Connection type.
+- Zone.
+- Physical location.
+- Application date.
+- Approval date, if applicable.
+- Installation date.
+- Connection status.
+- Assigned tariff.
+- Notes.
+The connection must reference a real customer record.
+Meters table
+Columns:
+- Meter number.
+- Serial number.
+- Customer.
+- Connection.
+- Meter type.
+- Installation date.
+- Last reading.
+- Condition.
+- Status.
+Meter detail screen
+Show:
+- Meter serial number.
+- Connection.
+- Customer.
+- Current recorded reading.
+- Last reading date.
+- Installation date.
+- Meter condition.
+- Reading history.
+- Replacement history.
+A Replace Meter action opens a workflow that captures the old meter's final reading and the new meter's initial reading. Both records remain available historically.
+
+9. Meter readings — exact specification
+
+
+
+
+
+
+
+
+freelancer.com
+
+
+The meter reading page should contain:
+
+Top:
+- Meter Readings.
+- Selected reading period.
+- Zone filter.
+- Assigned reader filter.
+- Record Reading action.
+Summary cards:
+- Total meters due.
+- Readings submitted.
+- Readings awaiting review.
+- Readings rejected.
+Reading table
+Columns:
+- Customer account.
+- Customer name.
+- Meter serial number.
+- Previous reading.
+- Current reading.
+- Consumption.
+- Reading date.
+- Reader.
+- Status.
+Record reading
+Fields:
+- Customer or connection search.
+- Meter selection.
+- Reading period.
+- Previous reading (read-only).
+- Current reading.
+- Reading date.
+- Optional image upload.
+- Notes.
+The consumption field is calculated automatically:
+\[
+\text{Consumption}=\text{Current Reading}-\text{Previous Reading}
+\]
+
+When the current reading is entered, the consumption value updates immediately.
+
+If the current reading is lower than the previous reading:
+- Do not silently accept it.
+- Display an error.
+- Offer the authorised meter-reset or replacement correction process.
+If the reading is unusually high:
+- Show a warning.
+- Ask for a reason or review.
+- Do not automatically discard the reading.
+The reading should have an approval process before billing.
+
+10. Billing and invoices — exact specification
+
+
+
+
+
+
+
+
+pooldial.com
+
+
+The Billing page is divided into three tabs:
+1. Invoices.
+2. Tariffs.
+3. Billing Runs.
+A. Invoices
+Top summary:
+- Total invoices.
+- Total amount billed.
+- Amount collected.
+- Outstanding amount.
+Toolbar:
+- Search invoice number or customer.
+- Billing period.
+- Zone.
+- Invoice status.
+- Export.
+Table:
+Column	Example
+Invoice number	INV-2026-0090
+Customer	Mary Wanjiku
+Account	KIK-000124
+Period	October 2026
+Invoice total	KSh 950
+Amount paid	KSh 500
+Balance	KSh 450
+Due date	15 Nov 2026
+Status	Partially paid
+
+Clicking an invoice opens the invoice detail screen.
+B. Invoice detail screen
+Header:
+- Invoice number.
+- Customer name.
+- Status.
+- Download PDF.
+- Print.
+- Record payment, if authorised.
+Main content:
+- Customer billing information.
+- Invoice date.
+- Billing period.
+- Due date.
+- Previous meter reading.
+- Current meter reading.
+- Consumption.
+- Tariff breakdown.
+- Other charges.
+- Adjustments.
+- Total.
+- Amount paid.
+- Remaining balance.
+At the bottom:
+- Payment allocation history.
+- Status history.
+- Audit details.
+C. Tariff management
+The tariff screen is only available to authorised users.
+
+Tariff list columns:
+- Tariff name.
+- Customer category.
+- Pricing structure.
+- Effective date.
+- Status.
+- Actions.
+When creating a tariff:
+
+General details
+- Tariff name.
+- Description.
+- Customer category.
+- Effective from.
+- Effective until.
+- Status.
+Pricing configuration
+- Billing unit.
+- Minimum charge, if applicable.
+- Fixed charge, if applicable.
+- Consumption bands.
+- Rate for each band.
+- Additional charges.
+Preview
+The system should calculate an example bill using the proposed tariff before it is saved.
+D. Billing run workflow
+The Billing Runs page is a particularly useful feature.
+
+It shows:
+- Billing period.
+- Number of eligible connections.
+- Number of approved readings.
+- Number of missing readings.
+- Number of generated invoices.
+- Total billed.
+When the billing officer clicks Start Billing Run:
+1. Select the billing period.
+2. Select eligible zones.
+3. Retrieve approved readings.
+4. Identify missing readings.
+5. Check for previously generated invoices.
+6. Calculate consumption.
+7. Apply the effective tariff.
+8. Calculate charges.
+9. Generate invoice records.
+10. Show a completion summary.
+The system should show an exception list if some customers cannot be billed because their readings are missing or invalid.
+
+Do not generate duplicate invoices when the user clicks the button twice.
+E. Invoice PDF
+The invoice should be an actual printable document, not just a screenshot of a React component.
+
+Its design should use:
+- White background.
+- Deep ocean headings.
+- Small turquoise accents.
+- Logo.
+- Clearly separated financial sections.
+- Readable currency formatting.
+- Invoice number and due date prominently displayed.
+The PDF should remain professional when printed in black and white.
+
+11. Payments — exact specification
+
+
+
+
+
+
+
+
+ironelephantsolutions.com
+
+
+The Payments module has four tabs:
+- Transactions.
+- Record Payment.
+- Reconciliation.
+- Receipts.
+A. Transactions
+Summary cards:
+- Collected today.
+- Collected this month.
+- Pending reconciliation.
+- Reversed payments.
+Filters:
+- Date range.
+- Payment method.
+- Customer.
+- Transaction status.
+- Reference number.
+Table:
+- Receipt number.
+- Customer.
+- Account.
+- Amount.
+- Payment method.
+- Transaction reference.
+- Date.
+- Status.
+- Actions.
+B. Record Payment
+Use a two-column layout.
+
+Left side: payment form.
+
+Right side: customer account summary.
+
+Form fields:
+- Customer account.
+- Customer name, automatically populated.
+- Outstanding invoices.
+- Invoice allocation.
+- Amount received.
+- Payment method.
+- Transaction reference.
+- Payment date.
+- Notes.
+The customer summary should show:
+- Total outstanding.
+- Number of unpaid invoices.
+- Latest invoice.
+- Last payment.
+When the user enters an amount, show how it will be allocated.
+
+If the customer has several unpaid invoices, the officer can choose which invoice to pay, or the application can apply a clearly defined allocation rule.
+C. Payment methods
+M-Pesa
+- Transaction reference.
+- Phone number.
+- Payment amount.
+- Transaction date.
+- Verification status.
+Cash
+- Amount.
+- Receipt details.
+- Receiving officer.
+- Date.
+Bank
+- Bank reference.
+- Amount.
+- Deposit date.
+- Supporting details.
+For the first project release, M-Pesa can be a clearly labelled simulated payment option.
+D. Payment reconciliation
+This screen allows staff to compare payment records with the expected transaction records.
+
+Show:
+- Matched transactions.
+- Unmatched transactions.
+- Duplicate references.
+- Pending verification.
+- Reversed transactions.
+A user should be able to open a transaction and inspect why it has not been matched.
+E. Receipt
+The receipt should show:
+- Receipt number.
+- Customer.
+- Account number.
+- Payment amount.
+- Payment method.
+- Transaction reference.
+- Date and time.
+- Invoice allocation.
+- Outstanding balance after payment.
+The receipt can be downloaded or printed.
+Important payment interaction
+After a payment is successfully recorded:
+1. The payment form displays success.
+2. Pip celebrates briefly.
+3. The receipt number is displayed.
+4. The invoice balance is refreshed.
+5. The customer's payment history is updated.
+6. The dashboard revenue figure is updated.
+All these changes must follow a successful backend response, not just a button click.
+
+12. Fault reports and maintenance — exact specification
+
+
+
+
+
+
+
+
+tractian.com
+
+
+The fault management module has two main tabs:
+- Fault Reports.
+- Work Orders.
+A. Fault Reports
+Summary cards:
+- Total reports.
+- Open.
+- High priority.
+- Resolved this month.
+Table:
+- Fault reference.
+- Category.
+- Reporter.
+- Location.
+- Zone.
+- Priority.
+- Assigned technician.
+- Date reported.
+- Status.
+Fault report categories
+- Leakage.
+- Burst pipe.
+- No water supply.
+- Low water pressure.
+- Faulty meter.
+- Damaged connection.
+- Infrastructure damage.
+- Other.
+Create fault report
+Fields:
+- Reporter.
+- Customer account, where applicable.
+- Fault category.
+- Description.
+- Zone.
+- Exact location or landmark.
+- Priority.
+- Date reported.
+- Optional image attachment.
+The customer portal can automatically populate the reporter and account details.
+B. Fault detail screen
+Display:
+- Fault reference.
+- Description.
+- Reporter.
+- Location.
+- Priority.
+- Date reported.
+- Image attachment.
+- Assigned technician.
+- Current status.
+- Status history.
+- Work order.
+- Resolution notes.
+C. Work orders
+Table:
+- Work-order number.
+- Related fault.
+- Technician.
+- Location.
+- Priority.
+- Assigned date.
+- Due date.
+- Status.
+Work-order lifecycle
+1. Open — a fault has been received.
+2. Assigned — a manager assigns a technician.
+3. In Progress — the technician starts work.
+4. Awaiting Parts — work cannot continue yet.
+5. Completed — technician records the repair.
+6. Verified — an authorised person checks the work.
+7. Closed — the work order is finalised.
+
+A completed work order should require:
+- Work performed.
+- Resolution description.
+- Completion date.
+- Technician responsible.
+- Optional photograph or evidence.
+A fault should not be closed just because someone clicked a button. The system should preserve its complete history.
+
+13. Infrastructure — exact specification
+The Infrastructure page is an asset register.
+
+Top:
+- Infrastructure.
+- Manage the water scheme's physical assets and maintenance records.
+- + Add Asset.
+Summary:
+- Total assets.
+- Operational.
+- Under maintenance.
+- Critical condition.
+Asset categories
+- Water sources.
+- Storage tanks.
+- Pumps.
+- Pipelines.
+- Valves.
+- Distribution points.
+- Other equipment.
+Asset table
+Columns:
+- Asset ID.
+- Asset name.
+- Category.
+- Location.
+- Condition.
+- Operational status.
+- Last maintenance.
+- Next maintenance.
+Add asset form
+Fields:
+- Asset name.
+- Asset ID (automatically generated).
+- Category.
+- Description.
+- Location.
+- Installation date.
+- Condition.
+- Operational status.
+- Responsible person.
+- Last maintenance date.
+- Next maintenance date.
+- Notes.
+Asset detail
+Tabs:
+- Overview.
+- Maintenance History.
+- Related Faults.
+- Documents.
+An asset can have multiple maintenance records. Never replace its previous maintenance record with the latest one.
+
+14. Reports and analytics — exact specification
+
+
+
+
+
+
+
+
+dribbble.com
+
+
+The Reports page should begin with a filter bar.
+
+Filters:
+- Date range.
+- Zone.
+- Customer category.
+- Status.
+- Report type.
+Then provide report categories.
+Financial reports
+Revenue report
+- Total collected.
+- Daily/weekly/monthly collections.
+- Collection by payment method.
+- Revenue trend chart.
+- Transaction details table.
+Outstanding balances
+- Total outstanding.
+- Number of accounts in arrears.
+- Amount overdue.
+- Customer-level balances.
+Payment report
+- Payments recorded.
+- Payment method breakdown.
+- Reversed payments.
+- Unmatched transactions.
+Consumption reports
+Consumption by period
+- Total consumption.
+- Monthly trend.
+- Average per connection.
+- Comparison with previous periods.
+Consumption by zone
+- Total m³.
+- Number of active connections.
+- Average consumption.
+- Comparison between zones.
+Abnormal readings
+- Unusually high readings.
+- Zero readings.
+- Missing readings.
+- Rejected readings.
+Customer reports
+- Customer registration trends.
+- Active versus inactive customers.
+- Connections by zone.
+- Customer categories.
+- Outstanding balances by customer.
+Maintenance reports
+- Faults by type.
+- Faults by zone.
+- Average resolution time.
+- Technician workload.
+- Assets with repeated faults.
+Export controls
+Every report should provide:
+- Export PDF.
+- Export Excel.
+- Export CSV.
+- Print.
+Reports must include:
+- Report title.
+- Generation date.
+- Selected period.
+- Filters applied.
+- Relevant totals.
+- Data table.
+- Page numbering for longer PDF reports.
+
+15. Announcements and notifications
+The Announcements module is for community communication.
+Announcement directory
+Columns:
+- Announcement title.
+- Audience.
+- Published date.
+- Expiry date.
+- Status.
+- Author.
+Create announcement
+Fields:
+- Title.
+- Message.
+- Audience.
+- Zone, if targeted.
+- Publish date.
+- Expiry date.
+- Status.
+- Optional attachment.
+Audience choices:
+- All customers.
+- Selected zones.
+- All staff.
+- Selected roles.
+Announcement detail
+Display:
+- Title.
+- Full message.
+- Publication date.
+- Author.
+- Audience.
+- Attachment.
+- Status.
+Notification centre
+The header bell opens a panel containing:
+- Notification title.
+- Short message.
+- Date/time.
+- Read/unread state.
+- Link to the related record.
+There should also be a full notifications page with filters for unread, read and all.
+
+16. User management and settings
+User management
+The user directory contains:
+- Name.
+- Username/email.
+- Role.
+- Phone number.
+- Account status.
+- Last login.
+- Actions.
+Actions:
+- View profile.
+- Edit.
+- Assign role.
+- Deactivate.
+- Reset password, through a secure reset workflow.
+Create staff account
+Fields:
+- Full name.
+- Email/username.
+- Phone number.
+- Role.
+- Temporary password or invitation process.
+- Account status.
+A staff member should be required to change a temporary password at first login.
+Settings sections
+Organisation
+- Display name.
+- Logo.
+- Contact details.
+- Address.
+- Currency.
+Community zones
+- Zone names.
+- Descriptions.
+- Status.
+Billing
+- Billing periods.
+- Invoice numbering.
+- Due-date defaults.
+- Payment allocation rules.
+Notifications
+- In-app preferences.
+- Email/SMS settings, if integrated.
+Security
+- Password policy.
+- Session settings.
+- Login history.
+Data management
+- Backup information.
+- Export records.
+- Retention policy.
+Sensitive settings should be accessible only to authorised administrators.
+
+17. Customer portal — exact specification
+
+
+
+
+
+
+
+
+blink.new
+
+
+The customer portal should have its own simplified navigation.
+
+Desktop:
+- Logo on the left.
+- Home.
+- My Account.
+- My Bills.
+- My Payments.
+- My Consumption.
+- Report a Fault.
+- Profile.
+Mobile:
+- Compact header.
+- Menu drawer.
+- Large touch-friendly action buttons.
+- Stacked cards.
+Customer home page
+Welcome message:
+
+Hello, Mary!
+
+Here's your water account at a glance.
+
+Account card:
+- Account number.
+- Customer name.
+- Connection status.
+- Community zone.
+Outstanding balance card:
+- Amount due.
+- Due date.
+- View bill button.
+Recent payment:
+- Last amount.
+- Date.
+- Receipt link.
+Consumption card:
+- Current month's usage.
+- Previous month's usage.
+- Small trend chart.
+Latest announcement:
+- Title.
+- Short preview.
+- Read more.
+Quick actions:
+- View bill.
+- View payments.
+- Report fault.
+My Account
+Show customer information and connection details, with a clear distinction between editable profile information and official account details.
+My Bills
+Show a list of invoices, with:
+- Invoice number.
+- Billing period.
+- Amount.
+- Due date.
+- Amount paid.
+- Balance.
+- Status.
+- Download option.
+My Payments
+Show:
+- Date.
+- Amount.
+- Payment method.
+- Receipt number.
+- Transaction reference.
+- Invoice allocation.
+My Consumption
+A line chart of monthly consumption, with:
+- Current period.
+- Previous period.
+- Historical readings.
+- Consumption units.
+Report a Fault
+A customer can submit:
+- Fault type.
+- Description.
+- Location.
+- Photograph.
+After submission, display the fault reference and status.
+
+Customers can see the history of their own submitted faults.
+
+18. Global states: the details most applications forget
+Every page must be designed for more than the ideal scenario where data exists and everything works.
+
+For every module, design these states:
+State	What the user sees
+Loading	Skeleton placeholders
+Loaded	Actual records
+Empty	Pip illustration and useful next action
+Search empty	Search illustration and clear-filter action
+Error	Clear error message and retry action
+No permission	Access denied message
+Offline	Connection warning
+Saving	Disabled submit button and progress indicator
+Success	Confirmation and next action
+Validation failure	Field-specific errors
+
+Examples
+Empty customer directory
+
+Pip holds a clipboard.
+
+No customers registered yet.
+
+Start by registering the first customer in your community.
+
+Button: Add Customer.
+
+No invoices
+
+Pip looks at an empty document.
+
+No invoices for this period.
+
+Invoices will appear here after a billing run is completed.
+
+No internet connection
+
+A small warning at the top of the page:
+
+Connection lost. Some information may not be up to date.
+
+Do not silently pretend that a payment or customer registration succeeded when the backend was unreachable.
+Part II — Behaviour and technical details
+19. Exact interaction rules
+These rules should be shared across every module.
+Buttons
+Every button must have five states:
+1. Default.
+2. Hover.
+3. Pressed.
+4. Disabled.
+5. Loading.
+Primary buttons:
+- Turquoise background.
+- White text.
+- Medium font weight.
+- 44px minimum height.
+- 10px corner radius.
+Secondary buttons:
+- White background.
+- Light seafoam border.
+- Deep ocean text.
+Danger buttons:
+- Muted coral/red.
+- Used only for destructive actions.
+Button labels should describe the action. Use Save Customer, not OK, for example.
+Forms
+Every field should support:
+- Empty.
+- Focused.
+- Filled.
+- Invalid.
+- Disabled.
+- Read-only.
+Validation should occur when appropriate, such as after leaving a field or submitting the form. Do not bombard users with errors before they've had a chance to type.
+Dropdowns
+Dropdowns should:
+- Open below the field.
+- Have a search option when there are many items.
+- Support keyboard navigation.
+- Show the selected item.
+- Close when the user clicks outside.
+- Display a clear empty state if there are no choices.
+Confirmation dialogs
+Use confirmation dialogs for:
+- Deactivating customers.
+- Reversing payments.
+- Cancelling invoices.
+- Removing staff accounts.
+- Changing important tariff configurations.
+Example:
+
+Deactivate customer?
+
+This will prevent the customer account from being used for new transactions. Historical invoices and payments will remain available.
+
+Buttons:
+- Cancel.
+- Deactivate Customer.
+Search
+Global search should be able to find records the user is authorised to see:
+- Customers.
+- Account numbers.
+- Invoices.
+- Receipts.
+- Meter serial numbers.
+- Fault references.
+Search results should be grouped by category.
+
+Never expose sensitive records through search if the user does not have permission to view them.
+
+20. Animation system — exact design rules
+Use Motion for React for more complex transitions and CSS transitions for simple colour and shadow changes.
+Page transition
+When changing pages:
+- Old page fades out.
+- New page fades in.
+- New content moves up by approximately 8px.
+- Duration: 180–250ms.
+Card entrance
+Dashboard cards appear in a slight stagger:
+- First card.
+- Second card.
+- Third card.
+- Fourth card.
+The stagger should be subtle. Do not delay the entire dashboard while the animation plays.
+Pip loading animation
+Pip:
+- Moves gently upward.
+- Returns to its original position.
+- A circular ripple expands underneath.
+- Ripple fades out.
+- Animation repeats while the data request is pending.
+Water-inspired progress
+Progress bars should fill smoothly, with a gentle wave-like edge if practical.
+
+Use this for:
+- Meter-reading completion.
+- Work-order progress.
+- Payment allocation progress.
+Success animation
+After a successful operation:
+- Pip performs one small bounce.
+- A small ripple appears.
+- A success message slides in.
+- The interface updates with the newly saved record.
+Important animation restriction
+Animations must never:
+- Prevent form submission.
+- Delay navigation unnecessarily.
+- Make users wait for data.
+- Hide important error messages.
+- Run excessively on every screen.
+Support reduced-motion preferences.
+
+21. Database and business rules that must never be overlooked
+These are the rules that make the application a real information system rather than a visual prototype.
+Customer records
+- Account numbers must be unique.
+- Customer details must be validated.
+- A customer can have multiple connections.
+- Deactivation must preserve history.
+Connections and meters
+- A meter belongs to a connection.
+- Meter replacements must preserve old readings.
+- A connection can have a history of meter installations.
+- Only active and eligible connections should enter the normal billing process.
+Meter readings
+- Readings must be associated with a meter.
+- Readings must have a date and reading period.
+- Consumption must be calculated consistently.
+- Duplicate period submissions must be prevented.
+- Approved readings are used for final billing.
+Billing
+- Tariffs have effective dates.
+- Old invoices retain their original calculation details.
+- An invoice cannot be generated twice for the same billing period and connection.
+- Invoice balances must reflect payments, adjustments and credits.
+Payments
+- Payments must have unique transaction or receipt references.
+- A payment can be allocated to one or more invoices.
+- Partial payments must work.
+- Reversals must be traceable.
+- Payment records should never simply disappear.
+Faults
+- Every fault gets a unique reference.
+- Every status change has a timestamp and user.
+- Work orders link to their corresponding faults.
+- Technicians can only update jobs they are authorised to manage.
+Reports
+- Report figures must come from stored records.
+- Reports must respect the selected date range.
+- Financial reports must use consistent accounting rules.
+- Users should only see information their roles permit.
+
+22. The final technical component list
+To avoid inconsistent screens, build reusable components rather than creating every button, field and card separately.
+Component	Purpose
+AppSidebar	Main navigation
+AppHeader	Global header
+PageHeader	Page title and actions
+Breadcrumbs	Navigation hierarchy
+MetricCard	Dashboard statistics
+DataTable	Searchable and filterable records
+StatusBadge	Record status
+SearchInput	Search fields
+FilterBar	Reusable filters
+FormField	Standard form wrapper
+FormSection	Grouped form fields
+DatePicker	Date selection
+CurrencyInput	Kenyan shilling input
+ConfirmDialog	Destructive action confirmation
+ToastNotification	Success/error feedback
+EmptyState	Pip and helpful empty message
+LoadingSkeleton	Loading placeholders
+PipMascot	Mascot with different animation states
+ChartCard	Standard chart container
+FileUploader	Image/document uploads
+Pagination	Table navigation
+UserAvatar	User identity
+NotificationPanel	Header notifications
+
+A reusable component should have consistent spacing, typography and behaviour regardless of which module uses it.
+
+23. Final visual quality checklist
+Before calling a screen complete, check:
+- [ ] Does it use the correct colour palette?
+- [ ] Is the page title clear?
+- [ ] Is the content hierarchy obvious?
+- [ ] Are the cards aligned?
+- [ ] Are the margins and spacing consistent?
+- [ ] Are the table columns readable?
+- [ ] Are currency values formatted as KSh?
+- [ ] Are water readings displayed in m³?
+- [ ] Are status badges consistent?
+- [ ] Do buttons have hover and disabled states?
+- [ ] Are forms properly labelled?
+- [ ] Are validation errors visible?
+- [ ] Does the screen have an empty state?
+- [ ] Does it have a loading state?
+- [ ] Does it handle API errors?
+- [ ] Does it work on mobile?
+- [ ] Does it respect user permissions?
+- [ ] Are animations subtle and purposeful?
+- [ ] Does Pip appear only where useful?
+- [ ] Is the displayed data real rather than decorative?
+24. The development standard
+The design should be implemented using a component-based React structure, with clear separation between presentation, API communication and business logic. React's documentation is a useful reference for component composition, state, events and form handling. 
+React+2
+
+
+For animations, use Motion's official React documentation as the reference rather than copying outdated Framer Motion examples. Motion for React documentation.
+
+The recommended stack remains:
+- React + TypeScript.
+- Node.js + Express + TypeScript.
+- PostgreSQL.
+- Prisma.
+- Bootstrap 5 with custom CSS.
+- Motion for React.
+- Lucide React.
+No ASP.NET backend.
+
+25. What the finished application should look like as a whole
+
+
+
+
+
+
+
+
+
+
+
+
+
+The overall experience should be consistent:
+- The staff portal is structured, information-rich and efficient.
+- The customer portal is welcoming and simple.
+- The dashboard gives management an accurate picture of the scheme.
+- Financial workflows are traceable.
+- Meter readings and billing are logically connected.
+- Faults move through a clear repair process.
+- Infrastructure has a proper maintenance history.
+- Pip gives the system a recognisable identity.
+- The animations bring personality without sacrificing usability.
+My strongest recommendation: do not start implementing all 15 modules at once. Build the application shell, design system and login first. Then build one complete workflow from beginning to end:
+
+Register Customer → Create Connection → Record Meter → Submit Reading → Generate Invoice → Record Payment → Generate Receipt
+
+Once that entire workflow works, you will have the foundation for the rest of the application.
